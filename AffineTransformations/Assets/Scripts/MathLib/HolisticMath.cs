@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -22,6 +23,21 @@ public class HolisticMath
         float squareRoot = Mathf.Sqrt(diffSquared);
         return squareRoot;
 
+    }
+
+    public static Coords Translate(Coords position, Vector3 vector)
+    {
+        float[] translateValues = { 1, 0, 0, vector.x,
+                                    0, 1, 0, vector.y,
+                                    0, 0, 1, vector.z,
+                                    0, 0, 0, 1 };
+
+        Matrix translateMatrix = new Matrix(4, 4, translateValues);
+        Matrix pos = new Matrix(4, 1, position.AsFloats());
+
+        Matrix result = translateMatrix * pos;
+
+        return result.AsCoords();
     }
 
     static public Coords Lerp(Coords A, Coords B, float t)
